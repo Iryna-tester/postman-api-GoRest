@@ -1,0 +1,875 @@
+{
+  "info": {
+    "_postman_id": "46b52db3-af87-45af-9451-412578a988a2",
+    "name": "TestGoRest",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53355899",
+    "_collection_link": "https://go.postman.co/collection/53355899-46b52db3-af87-45af-9451-412578a988a2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Test1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Статус код 201\", () => {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Дані користувача відповідають запиту\", () => {\r",
+              "    pm.expect(jsonData.name).to.be.a('string').and.lengthOf.at.most(200);\r",
+              "    pm.expect(jsonData.gender).to.be.oneOf(['male', 'female']);\r",
+              "    pm.expect(jsonData.status).to.be.oneOf(['active', 'inactive']);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c6d34b4023dffb6a5f2469f52eda0bbf550ff3bbb6def79bb1c46c41a67cf5b2",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"name\": \"Iryna\", \"email\": \"irina.{{$timestamp}}@ukr.net\", \"gender\": \"male\", \"status\": \"active\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Статус код 201\", () => {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Дані користувача відповідають запиту\", () => {\r",
+              "    pm.expect(jsonData.name).to.be.a('string').and.lengthOf.at.most(200);\r",
+              "    pm.expect(jsonData.gender).to.be.oneOf(['male', 'female']);\r",
+              "    pm.expect(jsonData.status).to.be.oneOf(['active', 'inactive']);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c6d34b4023dffb6a5f2469f52eda0bbf550ff3bbb6def79bb1c46c41a67cf5b2",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"name\": \"\", \"email\": \"\", \"gender\": \"\", \"status\": \"\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "test4",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// 1. Очікуємо статус 201 Created\r",
+              "pm.test(\"Статус код 201: Користувач успішно створений\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "// 2. Перевірка правильності збережених даних\r",
+              "const jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Дані у відповіді відповідають запиту\", function () {\r",
+              "    pm.expect(jsonData.name).to.eql(\"Ir\");\r",
+              "    pm.expect(jsonData.gender).to.eql(\"male\");\r",
+              "    pm.expect(jsonData.status).to.eql(\"inactive\");\r",
+              "});\r",
+              "\r",
+              "// 3. Перевірка наявності ID (підтверджує запис у базу)\r",
+              "pm.test(\"Користувач отримав унікальний ID\", function () {\r",
+              "    pm.expect(jsonData.id).to.be.a('number');\r",
+              "}); "
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c6d34b4023dffb6a5f2469f52eda0bbf550ff3bbb6def79bb1c46c41a67cf5b2",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": " {\r\n    \"name\": \"Ir\",\r\n    \"email\": \"irina.{{$timestamp}}@ukr.net\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test3",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Статус код 201\", () => {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Дані користувача відповідають запиту\", () => {\r",
+              "    pm.expect(jsonData.name).to.be.a('string').and.lengthOf.at.most(200);\r",
+              "    pm.expect(jsonData.gender).to.be.oneOf(['male', 'female']);\r",
+              "    pm.expect(jsonData.status).to.be.oneOf(['active', 'inactive']);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {
+          "connection": true,
+          "accept-encoding": true,
+          "accept": true,
+          "user-agent": true,
+          "host": true,
+          "content-length": true,
+          "content-type": true
+        }
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c6d34b4023dffb6a5f2469f52eda0bbf550ff3bbb6def79bb1c46c41a67cf5b2",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"name\": \"A...A\" (201 раз), \"email\": \"irina.{{$timestamp}}@ukr.net\", \"gender\": \"$\", \"status\": \"&\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test5",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\", \r\n    \"email\": \"irina.199.{{$timestamp}}@ukr.net\",\r\n    \"gender\": \"female\",\r\n    \"status\": \"active\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test6",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c6d34b4023dffb6a5f2469f52eda0bbf550ff3bbb6def79bb1c46c41a67cf5b2",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"I\",\r\n    \"email\": \"irina.1char.{{$timestamp}}@ukr.net\",\r\n    \"gender\": \"female\",\r\n    \"status\": \"inactive\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test7",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c6d34b4023dffb6a5f2469f52eda0bbf550ff3bbb6def79bb1c46c41a67cf5b2",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Test User\",\r\n    \"email\": \"irina.invalid-format\", \r\n    \"gender\": \"male\",\r\n    \"status\": \"active\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test8",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c6d34b4023dffb6a5f2469f52eda0bbf550ff3bbb6def79bb1c46c41a67cf5b2",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "  {\r\n    \"name\": \"Iryna\",\r\n    \"email\": \"irina.gender.{{$timestamp}}@ukr.net\",\r\n    \"gender\": \"unknown\",\r\n    \"status\": \"active\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test9",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// 1. Очікуємо статус 200 OK\r",
+              "pm.test(\"Статус код 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const jsonData = pm.response.json();\r",
+              "\r",
+              "// 2. Перевіряємо, що це масив (список)\r",
+              "pm.test(\"Відповідь є масивом даних\", function () {\r",
+              "    pm.expect(jsonData).to.be.an('array');\r",
+              "});\r",
+              "\r",
+              "// 3. Перевіряємо кількість (20)\r",
+              "pm.test(\"Кількість користувачів на сторінці дорівнює 20\", function () {\r",
+              "    pm.expect(jsonData.length).to.eql(20);\r",
+              "});\r",
+              "\r",
+              "// 4. Перевірка заголовка ліміту в Headers\r",
+              "pm.test(\"Заголовок X-Pagination-Limit дорівнює 20\", function () {\r",
+              "    const paginationLimit = pm.response.headers.get(\"X-Pagination-Limit\");\r",
+              "    pm.expect(paginationLimit).to.eql(\"20\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "\r",
+              "   "
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c6d34b4023dffb6a5f2469f52eda0bbf550ff3bbb6def79bb1c46c41a67cf5b2",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users?page=1&per_page=20",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "per_page",
+              "value": "20"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test10",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Статус код 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Отримано масив даних\", function () {\r",
+              "    pm.expect(jsonData).to.be.an('array');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Кількість користувачів на сторінці дорівнює 100\", function () {\r",
+              "    pm.expect(jsonData.length).to.eql(100);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users?page=1&per_page=100",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "per_page",
+              "value": "100"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test11",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              " pm.test(\"Статус код 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Сервер скинув кількість до 10 через некоректний параметр\", function () {\r",
+              "    pm.expect(jsonData.length).to.eql(10);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c32997b918bf5a2b040324e410af82bfd7c1effeb11f0e414c189b2e7adcf29f",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users?page=1&per_page=101",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "per_page",
+              "value": "101"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test12",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              " pm.test(\"Статус код 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const jsonData = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Сервер скинув кількість до 10 через некоректний параметр\", function () {\r",
+              "    pm.expect(jsonData.length).to.eql(10);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "c32997b918bf5a2b040324e410af82bfd7c1effeb11f0e414c189b2e7adcf29f",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users?page=1&per_page=ab",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "per_page",
+              "value": "ab"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test13",
+      "request": {
+        "auth": {
+          "type": "bearer"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://gorest.co.in/public/v2/users?page=1&per_page=9999",
+          "protocol": "https",
+          "host": [
+            "gorest",
+            "co",
+            "in"
+          ],
+          "path": [
+            "public",
+            "v2",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "per_page",
+              "value": "9999"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "c6d34b4023dffb6a5f2469f52eda0bbf550ff3bbb6def79bb1c46c41a67cf5b2",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          "// Generate random user profile and set collection variables",
+          "(function(){",
+          "    function randInt(min,max){return Math.floor(Math.random()*(max-min+1))+min}",
+          "    function randomName(){const first=['Alex','Sam','Jordan','Taylor','Casey','Riley','Morgan','Jamie','Chris','Pat'];const last=['Smith','Johnson','Lee','Brown','Jones','Garcia','Miller','Davis'];return first[randInt(0,first.length-1)]+' '+last[randInt(0,last.length-1)];}",
+          "    function randomEmail(name){const domains=['example.com','mail.com','test.org'];const clean=name.toLowerCase().replace(/[^a-z]/g,'');return clean+randInt(10,99)+'@'+domains[randInt(0,domains.length-1)];}",
+          "    function randomPhone(){return '+1-'+(100+randInt(0,899))+'-'+(100+randInt(0,899))+'-'+(1000+randInt(0,8999));}",
+          "    const name=randomName();",
+          "    const email=randomEmail(name);",
+          "    const phone=randomPhone();",
+          "    const profile={name:name,email:email,phone:phone};",
+          "    pm.collectionVariables.set('userProfile', JSON.stringify(profile));",
+          "    pm.collectionVariables.set('userEmail', email);",
+          "    pm.collectionVariables.set('userName', name);",
+          "    pm.collectionVariables.set('userPhone', phone);",
+          "})();"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "const jsonData = pm.response.json();\r",
+          "\r",
+          "pm.test(\"Статус код 201\", () => {\r",
+          "    pm.response.to.have.status(201);\r",
+          "});\r",
+          "\r",
+          "pm.test(\"Дані користувача відповідають запиту\", () => {\r",
+          "    pm.expect(jsonData.name).to.be.a('string').and.lengthOf.at.most(200);\r",
+          "    pm.expect(jsonData.gender).to.be.oneOf(['male', 'female']);\r",
+          "    pm.expect(jsonData.status).to.be.oneOf(['active', 'inactive']);\r",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "userEmail",
+      "value": ""
+    },
+    {
+      "key": "userName",
+      "value": ""
+    },
+    {
+      "key": "userPhone",
+      "value": ""
+    },
+    {
+      "key": "userGender",
+      "value": ""
+    },
+    {
+      "key": "userStatus",
+      "value": ""
+    },
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "userProfile",
+      "value": ""
+    }
+  ]
+}
